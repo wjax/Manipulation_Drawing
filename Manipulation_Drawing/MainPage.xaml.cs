@@ -285,7 +285,11 @@ namespace Manipulation_Drawing
       var tileSource = TileCombo.SelectedItem as ITileSource;
       if (tileSource != null)
       {
-        MyMap.TileSources.Add(new MapTileSource(tileSource.TileSource));
+                MyMap.TileSources.Add(new MapTileSource(tileSource.TileSource)
+                {
+                    AllowOverstretch = true,
+                    IsFadingEnabled = false
+                }); ;
       }
     }
 
@@ -299,6 +303,10 @@ namespace Manipulation_Drawing
       TileCombo.Items.Add(new WmsTileSource("RWS NWB", "http://geodata.nationaalgeoregister.nl/nwbwegen/ows?service=WMS", new[] { "wegvakken", "hectopunten" }));
       TileCombo.Items.Add(new WmsTileSource("RWS NWB 4326", "http://geodata.nationaalgeoregister.nl/nwbwegen/ows?service=WMS", new[] { "wegvakken", "hectopunten"},"1.3.0", "CRS", 4326));
 
+            WmsTileSource tileSource = new WmsTileSource("PNOA WMS", "http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&", new[] { "OI.OrthoimageCoverage" });
+            (tileSource.TileSource as HttpMapTileDataSource).AllowCaching = true;
+            //(tileSource.TileSource as HttpMapTileDataSource)
+            TileCombo.Items.Add(tileSource);
       TileCombo.SelectedIndex = 0;
     }
 
